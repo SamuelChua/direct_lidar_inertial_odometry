@@ -87,7 +87,7 @@ bool DegeneracyDetector::fitLineRANSAC(const std::vector<Eigen::Vector3d>& point
     return best_inlier_count > 0;
 }
 
-bool DegeneracyDetector::planeFromPoints(const std::vector<Eigen::Vector3d>& points, Eigen::Vector3d& planeNormal, double& planeD, double planeFitThreshold) {
+bool planeFromPoints(const std::vector<Eigen::Vector3d>& points, Eigen::Vector3d& planeNormal, double& planeD, double planeFitThreshold) {
     if (points.size() < 3) {
         std::cerr << "At least 3 points are required to fit a plane." << std::endl;
         return false;
@@ -269,6 +269,12 @@ void DegeneracyDetector::calculateNormalizedEigenvalues(
 bool DegeneracyDetector::detectDegeneracy(const pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud,
                                           const pcl::PointCloud<pcl::PointXYZ>::Ptr& map_cloud,
                                           const Eigen::Matrix<double, 6, 1>& current_pose) {
+
+      std::cout << std::endl
+            << "+-------------------------------------------------------------------+" << std::endl;
+  std::cout << "|                      Degeneracy Detection                         |"
+            << std::endl;
+  std::cout << "+-------------------------------------------------------------------+" << std::endl;
     calculateNormalizedEigenvalues(cloud, map_cloud, current_pose);
     bool is_degenerate = chiSquaredTest(normalized_eigenvalues);
 

@@ -13,8 +13,8 @@ public:
     DegeneracyNode(size_t buffer_size)
         : detector_(buffer_size), map_cloud_(new pcl::PointCloud<pcl::PointXYZ>()) {
         ros::NodeHandle nh;
-        // Initialize the subscriber for point clouds
-        sub_ = nh.subscribe("/ouster/points", 1, &DegeneracyNode::cloudCallback, this);
+        // Initialize the subscriber for LIDAR point clouds
+        sub_ = nh.subscribe("/velodyne_points", 1, &DegeneracyNode::cloudCallback, this);
         // Initialize the subscriber for odometry (pose)
         odom_sub_ = nh.subscribe("odom", 1, &DegeneracyNode::odomCallback, this);
     }

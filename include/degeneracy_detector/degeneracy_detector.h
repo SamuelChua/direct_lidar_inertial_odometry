@@ -16,9 +16,9 @@ public:
     double pointToPointResidue(const pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud_source, 
                            const pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud_target);
 
-    double pointToLineDistance(const Eigen::Vector3d& point, const Eigen::Vector3d& line_point1, const Eigen::Vector3d& line_point2) 
+    double pointToLineDistance(const Eigen::Vector3d& point, const Eigen::Vector3d& line_point1, const Eigen::Vector3d& line_point2);
                            
-    bool fitLineRANSAC(const std::vector<Eigen::Vector3d>& points, Eigen::Vector3d& best_line_point1, Eigen::Vector3d& best_line_point2, double threshold, int iterations)       ;                    
+    bool fitLineRANSAC(const std::vector<Eigen::Vector3d>& points, Eigen::Vector3d& best_line_point1, Eigen::Vector3d& best_line_point2, double threshold, int iterations);                    
 
     bool planeFromPoints(const std::vector<Eigen::Vector3d>& points, Eigen::Vector3d& planeNormal, double& planeD, double planeFitThreshold);
     
