@@ -1,0 +1,5 @@
+<launch>
+    <!-- Node for Degeneracy Detection -->
+    <node name="degeneracy_detector" pkg="direct_lidar_inertial_odometry" type="degeneracy_node" output="screen">
+    </node>
+</launch>

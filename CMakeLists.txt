@@ -21,7 +21,7 @@ include_directories(${PCL_INCLUDE_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 link_directories(${PCL_LIBRARY_DIRS})
 
-find_package( Eigen3 REQUIRED )
+find_package( Eigen3 REQUIRED ) 
 include_directories(${EIGEN3_INCLUDE_DIR})
 
 include(FindOpenMP)
@@ -100,11 +100,23 @@ add_library(nano_gicp STATIC
 )
 target_link_libraries(nano_gicp ${PCL_LIBRARIES} ${OpenMP_LIBS} nanoflann)
 
+# Degeneracy library
+add_library(degeneracy STATIC
+  src/degeneracy_detector/degeneracy_detector.cc
+)
+target_link_libraries(degeneracy ${PCL_LIBRARIES} ${OpenMP_LIBS} nano_gicp)
+
 # Odometry Node
 add_executable(dlio_odom_node src/dlio/odom_node.cc src/dlio/odom.cc)
 add_dependencies(dlio_odom_node ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
 target_compile_options(dlio_odom_node PRIVATE ${OpenMP_FLAGS})
 target_link_libraries(dlio_odom_node ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenMP_LIBS} Threads::Threads nano_gicp)
+
+# Degeneracy Node
+add_executable(degeneracy_node src/degeneracy_detector/degeneracy_node.cc)
+add_dependencies(degeneracy_node ${catkin_EXPORTED_TARGETS})
+target_compile_options(degeneracy_node PRIVATE ${OpenMP_FLAGS})
+target_link_libraries(degeneracy_node ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenMP_LIBS} Threads::Threads degeneracy)
 
 # Mapping Node
 add_executable (dlio_map_node src/dlio/map_node.cc src/dlio/map.cc)
